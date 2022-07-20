@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
 
-class AddTask extends StatelessWidget {
-  const AddTask({Key? key}) : super(key: key);
+class AddTask extends StatefulWidget {
+  AddTask({
+    Key? key,
+    required this.addTaskFunction,
+  }) : super(key: key);
 
+  Function addTaskFunction;
+
+  @override
+  State<AddTask> createState() => _AddTaskState();
+}
+
+class _AddTaskState extends State<AddTask> {
+  late String setNewTask;
   @override
   Widget build(BuildContext context) {
     return Container(
       color: const Color(0xFF757575),
       child: Container(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -31,13 +42,18 @@ class AddTask extends StatelessWidget {
                   color: Colors.lightBlueAccent,
                 ),
               ),
-              const TextField(
+              TextField(
+                onChanged: (newTask) {
+                  setNewTask = newTask;
+                },
                 autofocus: true,
                 textAlign: TextAlign.center,
               ),
               TextButton(
-                onPressed: () {},
-                child: Text(
+                onPressed: () {
+                  widget.addTaskFunction(setNewTask);
+                },
+                child: const Text(
                   'Add Task',
                   style: TextStyle(color: Colors.black),
                 ),
